@@ -24,7 +24,7 @@ namespace faction_capital_change {
                 return;
             }
 
-            string game         = args[1].ToLower();                                                                            // Hardcoded but can be exposed to command line args and passed from lua
+            string game         = args[1].ToLower();
             var appDataPath     = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var directory       = new DirectoryInfo($@"{appDataPath}\The Creative Assembly\{game}\save_games");
             if (!directory.EnumerateFiles().Any()) {
