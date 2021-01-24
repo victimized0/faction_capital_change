@@ -20,7 +20,7 @@ namespace faction_capital_change {
 
             string game         = "Attila";                                                                                     // Hardcoded but can be exposed to command line args and passed from lua
             var appDataPath     = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var directory       = new DirectoryInfo(@$"{appDataPath}\The Creative Assembly\{game}\save_games");
+            var directory       = new DirectoryInfo($@"{appDataPath}\The Creative Assembly\{game}\save_games");
             var latestSaveFile  = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First();
 
             var saveFile                    = EsfCodecUtil.LoadEsfFile(latestSaveFile.FullName);
