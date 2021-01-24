@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "faction_capital_change": {
+      "commandName": "Project",
+      "commandLineArgs": "71"
+    }
+  }
+}
