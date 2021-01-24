@@ -8,19 +8,30 @@ namespace faction_capital_change {
         static void Main(string[] args) {
             if (args == null || args.Length == 0) {
                 Console.WriteLine("Error. No arguments to parse were detected. Terminating...");
-            }
-
-            if (args.Length > 1)
-                Console.WriteLine("Warning. Detected more than 1 argument! Will only parse the first one.");
-
-            if (!uint.TryParse(args[0], out uint newCapitalId)) {
-                Console.WriteLine("Failed to parse passed argument!");
                 return;
             }
 
-            string game         = "Attila";                                                                                     // Hardcoded but can be exposed to command line args and passed from lua
+            if (args.Length < 2) {
+                Console.WriteLine("Error. Not all of the required arguments were passed. Terminating...");
+                return;
+            }
+
+            if (args.Length > 2)
+                Console.WriteLine("Warning. Detected more than 2 arguments! Extra arguments will be ignored.");
+
+            if (!uint.TryParse(args[0], out uint newCapitalId)) {
+                Console.WriteLine("Failed to parse new capital id argument!");
+                return;
+            }
+
+            string game         = args[1].ToLower();                                                                            // Hardcoded but can be exposed to command line args and passed from lua
             var appDataPath     = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var directory       = new DirectoryInfo($@"{appDataPath}\The Creative Assembly\{game}\save_games");
+            if (!directory.EnumerateFiles().Any()) {
+                Console.WriteLine("Error. No save files were found. Terminating...");
+                return;
+            }
+
             var latestSaveFile  = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First();
 
             var saveFile                    = EsfCodecUtil.LoadEsfFile(latestSaveFile.FullName);
